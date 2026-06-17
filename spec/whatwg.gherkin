@@ -1,0 +1,36 @@
+Feature: WHATWG 3.2.7 innerText Serialization Engine
+
+  Scenario: Elements matching display none are dropped entirely
+    Given a DOM element "<div>Hello <span style='display: none;'>Secret</span> World</div>"
+    When the engine computes the innerText serialization
+    Then the output text must be "Hello World"
+
+  Scenario: Hidden visibility acts as an empty inline box but isolates boundaries
+    Given a DOM element "<div>Left <p style='visibility: hidden;'>Hidden Block</p> Right</div>"
+    When the engine computes the innerText serialization
+    Then the output text must contain correct line spacing boundaries matching "Left \n\n Right"
+
+  Scenario: Pure metadata tags are ignored regardless of explicit display overrides
+    Given a DOM element "<div>Visible <script style='display: block;'>alert(1)</script> End</div>"
+    When the engine computes the innerText serialization
+    Then the output text must be "Visible End"
+
+  Scenario: Normal text runs collapse consecutive whitespaces
+    Given a DOM element "<div style='white-space: normal;'>  Multiple   spaces    here  </div>"
+    When the engine computes the innerText serialization
+    Then the output text must be "Multiple spaces here"
+
+  Scenario: Pre-formatted text spaces are structurally preserved
+    Given a DOM element "<div style='white-space: pre;'>  Preserve   spaces  \n  newlines</div>"
+    When the engine computes the innerText serialization
+    Then the output text must be "  Preserve   spaces  \n  newlines"
+
+  Scenario: BR elements inject an explicit newline item
+    Given a DOM element "<div>Line One<br>Line Two</div>"
+    When the engine computes the innerText serialization
+    Then the output text must be "Line One\nLine Two"
+
+  Scenario: Sibling block containers enforce exactly two newlines between text blocks
+    Given a DOM element "<div>Block A</div><div>Block B</div>"
+    When the engine computes the innerText serialization
+    Then the output text must be "Block A\n\nBlock B"

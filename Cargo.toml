@@ -1,0 +1,11 @@
+[package]
+name = "innertext"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+cssbox-core = "0.1.0"
+cssbox-dom = "0.1.0"
+html5ever = "0.39.0"
+lightningcss = "1.0.0-alpha.71"
+selectors = "0.38.0"
