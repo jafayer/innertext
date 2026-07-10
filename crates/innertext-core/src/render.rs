@@ -1,12 +1,12 @@
-use std::collections::HashSet;
-use std::rc::Rc;
+// This module has been refactored into:
+//   src/css.rs          — style parsing and CSS helpers
+//   src/inner_text.rs   — WHATWG rendered-text collection (innerText/outerText getter)
+//   src/text_content.rs — DOM descendant-text-content (textContent)
+//
+// This file is no longer compiled (mod render is absent from lib.rs).
 
-use html5ever::{parse_document, tendril::TendrilSink};
-use markup5ever_rcdom::{Handle, NodeData, RcDom};
-
-use crate::model::{Display, InnerTextError, Item, Style, TextTransform, WhiteSpace};
-
-pub fn inner_text_from_html(input: &str) -> Result<String, InnerTextError> {
+#[allow(dead_code)]
+fn _placeholder() {
     let dom: RcDom = parse_document(RcDom::default(), Default::default()).one(input);
     let root_style = Style::root();
 

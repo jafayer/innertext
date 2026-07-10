@@ -12,10 +12,14 @@ async function run() {
 
   await page.setContent(input.html ?? '', { waitUntil: 'load' });
   const selector = input.selector ?? 'body';
-  const result = await page.$eval(selector, (el) => el.innerText);
+  const result = await page.$eval(selector, (el) => ({
+    innerText: el.innerText,
+    outerText: el.outerText,
+    textContent: el.textContent ?? '',
+  }));
 
   await browser.close();
-  process.stdout.write(JSON.stringify({ innerText: result }));
+  process.stdout.write(JSON.stringify(result));
 }
 
 run().catch((err) => {

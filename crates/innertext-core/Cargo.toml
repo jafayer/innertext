@@ -9,13 +9,12 @@ name = "innertext_core"
 path = "src/lib.rs"
 
 [dependencies]
-cssbox-core.workspace = true
-cssbox-dom.workspace = true
 html5ever.workspace = true
-lightningcss.workspace = true
-selectors.workspace = true
 markup5ever_rcdom.workspace = true
+markup5ever.workspace = true
 thiserror.workspace = true
 
 [dev-dependencies]
 pretty_assertions = "1.4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"

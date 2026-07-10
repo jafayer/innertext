@@ -1,0 +1,218 @@
+[
+  {
+    "id": "plain_inline",
+    "html": "<div id='root'>Hello <span>World</span></div>",
+    "selector": "#root",
+    "category": "baseline"
+  },
+  {
+    "id": "display_none_simple",
+    "html": "<div id='root'>A <span style='display:none'>X</span> B</div>",
+    "selector": "#root",
+    "category": "display"
+  },
+  {
+    "id": "display_none_nested",
+    "html": "<div id='root'><span>One</span><span style='display:none'><b>Two</b></span><span>Three</span></div>",
+    "selector": "#root",
+    "category": "display"
+  },
+  {
+    "id": "visibility_hidden",
+    "html": "<div id='root'>Left <span style='visibility:hidden'>Ghost</span> Right</div>",
+    "selector": "#root",
+    "category": "visibility"
+  },
+  {
+    "id": "visibility_hidden_block",
+    "html": "<div id='root'>L<p style='visibility:hidden'>Hidden</p>R</div>",
+    "selector": "#root",
+    "category": "visibility"
+  },
+  {
+    "id": "whitespace_normal",
+    "html": "<div id='root' style='white-space:normal'>  a   b    c  </div>",
+    "selector": "#root",
+    "category": "whitespace"
+  },
+  {
+    "id": "whitespace_pre",
+    "html": "<div id='root' style='white-space:pre'>  a   b\n  c  </div>",
+    "selector": "#root",
+    "category": "whitespace"
+  },
+  {
+    "id": "whitespace_pre_line",
+    "html": "<div id='root' style='white-space:pre-line'>  a   b\n\n  c  </div>",
+    "selector": "#root",
+    "category": "whitespace"
+  },
+  {
+    "id": "br_single",
+    "html": "<div id='root'>Line1<br>Line2</div>",
+    "selector": "#root",
+    "category": "linebreak"
+  },
+  {
+    "id": "br_multiple",
+    "html": "<div id='root'>A<br><br>B</div>",
+    "selector": "#root",
+    "category": "linebreak"
+  },
+  {
+    "id": "block_siblings",
+    "html": "<div id='root'><div>Block A</div><div>Block B</div></div>",
+    "selector": "#root",
+    "category": "block"
+  },
+  {
+    "id": "paragraph_boundaries",
+    "html": "<div id='root'><p>First</p><p>Second</p></div>",
+    "selector": "#root",
+    "category": "block"
+  },
+  {
+    "id": "metadata_script",
+    "html": "<div id='root'>A<script>alert(1)</script>B</div>",
+    "selector": "#root",
+    "category": "metadata"
+  },
+  {
+    "id": "metadata_style",
+    "html": "<div id='root'>A<style>#x{display:none}</style>B</div>",
+    "selector": "#root",
+    "category": "metadata"
+  },
+  {
+    "id": "table_basic",
+    "html": "<table id='root'><tr><td>A</td><td>B</td></tr></table>",
+    "selector": "#root",
+    "category": "table"
+  },
+  {
+    "id": "table_two_rows",
+    "html": "<table id='root'><tr><td>A</td></tr><tr><td>B</td></tr></table>",
+    "selector": "#root",
+    "category": "table"
+  },
+  {
+    "id": "table_caption",
+    "html": "<table id='root'><caption>Cap</caption><tr><td>A</td></tr></table>",
+    "selector": "#root",
+    "category": "table"
+  },
+  {
+    "id": "text_transform_upper",
+    "html": "<div id='root' style='text-transform:uppercase'>Alpha beta</div>",
+    "selector": "#root",
+    "category": "transform"
+  },
+  {
+    "id": "text_transform_lower",
+    "html": "<div id='root' style='text-transform:lowercase'>Alpha BETA</div>",
+    "selector": "#root",
+    "category": "transform"
+  },
+  {
+    "id": "entity_decoding",
+    "html": "<div id='root'>A&nbsp;B &amp; C</div>",
+    "selector": "#root",
+    "category": "entities"
+  },
+  {
+    "id": "unicode_emoji",
+    "html": "<div id='root'>Hello 👋🌍</div>",
+    "selector": "#root",
+    "category": "unicode"
+  },
+  {
+    "id": "unicode_combining",
+    "html": "<div id='root'>Cafe\u0301</div>",
+    "selector": "#root",
+    "category": "unicode"
+  },
+  {
+    "id": "inline_with_comment",
+    "html": "<div id='root'>A<!--comment-->B</div>",
+    "selector": "#root",
+    "category": "dom"
+  },
+  {
+    "id": "nested_blocks",
+    "html": "<div id='root'><section><div>One</div><div>Two</div></section></div>",
+    "selector": "#root",
+    "category": "block"
+  },
+  {
+    "id": "list_items",
+    "html": "<ul id='root'><li>One</li><li>Two</li></ul>",
+    "selector": "#root",
+    "category": "block"
+  },
+  {
+    "id": "display_contents",
+    "html": "<div id='root'>A <span style='display:contents'><b>B</b></span> C</div>",
+    "selector": "#root",
+    "category": "display"
+  },
+  {
+    "id": "inline_blocks_mix",
+    "html": "<div id='root'>A <span>B</span><div>C</div>D</div>",
+    "selector": "#root",
+    "category": "block"
+  },
+  {
+    "id": "headless_form_input",
+    "html": "<div id='root'>Start <input value='x'> End</div>",
+    "selector": "#root",
+    "category": "replaced"
+  },
+  {
+    "id": "textarea_content",
+    "html": "<div id='root'><textarea>Typed</textarea></div>",
+    "selector": "#root",
+    "category": "replaced"
+  },
+  {
+    "id": "button_content",
+    "html": "<div id='root'><button><span>Press</span></button></div>",
+    "selector": "#root",
+    "category": "replaced"
+  },
+  {
+    "id": "soft_hyphen",
+    "html": "<div id='root'>co\u00adoperate</div>",
+    "selector": "#root",
+    "category": "unicode"
+  },
+  {
+    "id": "mixed_complex_1",
+    "html": "<div id='root'><p>A <span style='display:none'>x</span> B<br>C</p><p style='visibility:hidden'>Hidden</p><p>D</p></div>",
+    "selector": "#root",
+    "category": "complex"
+  },
+  {
+    "id": "mixed_complex_2",
+    "html": "<table id='root'><caption>T</caption><tr><td>1</td><td style='visibility:hidden'>2</td><td>3</td></tr><tr><td colspan='2'>4</td></tr></table>",
+    "selector": "#root",
+    "category": "complex"
+  },
+  {
+    "id": "rtl_text",
+    "html": "<div id='root'>שלום <span>עולם</span></div>",
+    "selector": "#root",
+    "category": "unicode"
+  },
+  {
+    "id": "cjk_text",
+    "html": "<div id='root'>你好 世界</div>",
+    "selector": "#root",
+    "category": "unicode"
+  },
+  {
+    "id": "fragment_multiple_roots",
+    "html": "<div id='root'>A</div><div>B</div>",
+    "selector": "body",
+    "category": "fragment"
+  }
+]

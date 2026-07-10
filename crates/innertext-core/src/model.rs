@@ -15,6 +15,8 @@ pub enum Display {
 pub enum WhiteSpace {
     Normal,
     Pre,
+    PreLine,
+    PreWrap,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -43,14 +45,8 @@ impl Style {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub enum Item {
-    Text(String),
-    RequiredBreak(u8),
-}
-
 #[derive(Debug, Error)]
-pub enum InnerTextError {
+pub enum ExtractionError {
     #[error("unable to parse input HTML")]
     Parse,
 }
