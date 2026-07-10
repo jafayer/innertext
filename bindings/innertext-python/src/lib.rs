@@ -1,14 +1,35 @@
-pub use innertext_core::ExtractionError;
-pub use innertext_core::Document;
+use pyo3::prelude::*;
+use pyo3::exceptions::PyValueError;
+use innertext_core::Document;
 
-pub fn inner_text(input: &str) -> Result<String, ExtractionError> {
-    innertext_core::inner_text_from_html(input)
+/// Extract innerText from HTML (rendered text collection per WHATWG spec)
+#[pyfunction]
+fn inner_text(html: &str) -> PyResult<String> {
+    Document::parse(html)
+        .map_err(|e| PyValueError::new_err(format!("Failed to parse HTML: {}", e)))
+        .map(|doc| doc.inner_text())
 }
 
-pub fn outer_text(input: &str) -> Result<String, ExtractionError> {
-    innertext_core::outer_text_from_html(input)
+/// Extract outerText from HTML (identical to innerText getter per WHATWG spec)
+#[pyfunction]
+fn outer_text(html: &str) -> PyResult<String> {
+    Document::parse(html)
+        .map_err(|e| PyValueError::new_err(format!("Failed to parse HTML: {}", e)))
+        .map(|doc| doc.outer_text())
 }
 
-pub fn text_content(input: &str) -> Result<String, ExtractionError> {
-    innertext_core::text_content_from_html(input)
+/// Extract textContent from HTML (CSS-blind structural text)
+#[pyfunction]
+fn text_content(html: &str) -> PyResult<String> {
+    Document::parse(html)
+        .map_err(|e| PyValueError::new_err(format!("Failed to parse HTML: {}", e)))
+        .map(|doc| doc.text_content())
+}
+
+#[pymodule]
+fn innertext(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(inner_text, m)?)?;
+    m.add_function(wrap_pyfunction!(outer_text, m)?)?;
+    m.add_function(wrap_pyfunction!(text_content, m)?)?;
+    Ok(())
 }

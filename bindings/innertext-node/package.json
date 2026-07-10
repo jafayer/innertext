@@ -1,0 +1,64 @@
+{
+  "name": "innertext",
+  "version": "0.1.0",
+  "description": "Pure Rust WHATWG-compliant innerText, outerText, and textContent extraction",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "scripts": {
+    "build": "napi build --platform",
+    "build:release": "napi build --platform --release",
+    "test": "node test.js",
+    "prepublishOnly": "npm run build:release"
+  },
+  "keywords": [
+    "html",
+    "text-extraction",
+    "innertext",
+    "outertext",
+    "textcontent",
+    "whatwg",
+    "rust",
+    "napi"
+  ],
+  "author": "Josh Fayer",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshfayer/innertext.git"
+  },
+  "homepage": "https://github.com/joshfayer/innertext#readme",
+  "engines": {
+    "node": ">=14"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^2.16.0"
+  },
+  "optionalDependencies": {
+    "@innertext/linux-x64": "0.1.0",
+    "@innertext/macos-x64": "0.1.0",
+    "@innertext/macos-arm64": "0.1.0",
+    "@innertext/win32-x64": "0.1.0"
+  },
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "innertext.*.node"
+  ],
+  "napi": {
+    "name": "innertext",
+    "triples": {
+      "additional": [
+        "x86_64-unknown-linux-gnu",
+        "x86_64-apple-darwin",
+        "aarch64-apple-darwin",
+        "x86_64-pc-windows-msvc"
+      ]
+    }
+  }
+}

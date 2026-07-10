@@ -6,7 +6,9 @@ license.workspace = true
 publish = false
 
 [lib]
-path = "src/lib.rs"
+crate-type = ["cdylib"]
 
 [dependencies]
 innertext-core = { path = "../../crates/innertext-core" }
+jni = "0.21"
+jni-sys = "0.3"

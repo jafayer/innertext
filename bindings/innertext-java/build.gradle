@@ -1,0 +1,74 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group = 'com.innertext'
+version = '0.1.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    
+    withSourcesJar()
+    withJavadocJar()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'java'
+        }
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            
+            pom {
+                name = 'innertext'
+                description = 'Pure Rust WHATWG-compliant innerText, outerText, and textContent extraction'
+                url = 'https://github.com/joshfayer/innertext'
+                
+                licenses {
+                    license {
+                        name = 'MIT'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+                
+                developers {
+                    developer {
+                        id = 'joshfayer'
+                        name = 'Josh Fayer'
+                    }
+                }
+                
+                scm {
+                    url = 'https://github.com/joshfayer/innertext'
+                    connection = 'scm:git:https://github.com/joshfayer/innertext.git'
+                    developerConnection = 'scm:git:git@github.com:joshfayer/innertext.git'
+                }
+            }
+        }
+    }
+    
+    repositories {
+        mavenLocal()
+    }
+}

@@ -6,7 +6,9 @@ license.workspace = true
 publish = false
 
 [lib]
-path = "src/lib.rs"
+crate-type = ["cdylib"]
 
 [dependencies]
 innertext-core = { path = "../../crates/innertext-core" }
+napi = { version = "2.16", default-features = false, features = ["napi8"] }
+napi-derive = "2.16"
