@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "innertext"
-version = "0.2.0"
+version = "0.2.1"
 description = "Pure Rust WHATWG-compliant innerText, outerText, and textContent extraction"
 readme = "README.md"
 license = { text = "MIT" }
@@ -26,6 +26,8 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Text Processing :: Markup :: HTML",
 ]
@@ -35,5 +37,5 @@ Repository = "https://github.com/joshfayer/innertext"
 Homepage = "https://github.com/joshfayer/innertext"
 
 [tool.maturin]
-features = ["pyo3/extension-module"]
+features = ["pyo3/extension-module", "pyo3/abi3-py37"]
 python-source = "python"

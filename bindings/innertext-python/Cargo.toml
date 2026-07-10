@@ -11,4 +11,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 innertext-core = { path = "../../crates/innertext-core" }
-pyo3 = { version = "0.22", features = ["extension-module"] }
+pyo3 = { version = "0.22", features = ["extension-module", "abi3-py37"] }
