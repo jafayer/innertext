@@ -1,0 +1,12 @@
+{
+  "name": "innertext-browser-oracle",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "oracle": "node oracle.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.54.2"
+  }
+}

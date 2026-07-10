@@ -1,5 +1,3 @@
-use html5ever::parse_fragment;
-
 fn main() {
     println!("Hello, world!");
 }

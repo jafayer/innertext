@@ -1,11 +1,23 @@
-[package]
-name = "innertext"
-version = "0.1.0"
-edition = "2024"
+[workspace]
+members = [
+	"crates/innertext-core",
+	"bindings/innertext-node",
+	"bindings/innertext-python",
+	"bindings/innertext-java",
+]
+default-members = ["crates/innertext-core"]
+resolver = "2"
 
-[dependencies]
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[workspace.dependencies]
 cssbox-core = "0.1.0"
 cssbox-dom = "0.1.0"
-html5ever = "0.39.0"
+html5ever = "0.29.1"
 lightningcss = "1.0.0-alpha.71"
 selectors = "0.38.0"
+markup5ever_rcdom = "0.5.0-unofficial"
+thiserror = "1.0"

@@ -1,0 +1,21 @@
+[package]
+name = "innertext-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+name = "innertext_core"
+path = "src/lib.rs"
+
+[dependencies]
+cssbox-core.workspace = true
+cssbox-dom.workspace = true
+html5ever.workspace = true
+lightningcss.workspace = true
+selectors.workspace = true
+markup5ever_rcdom.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+pretty_assertions = "1.4"
