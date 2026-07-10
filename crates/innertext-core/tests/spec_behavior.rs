@@ -89,7 +89,10 @@ fn text_content_includes_script_text() {
 fn text_content_preserves_raw_whitespace() {
     // No whitespace collapsing — raw text node data is concatenated.
     let html = "<div>  Multiple   spaces  </div>";
-    assert_eq!(text_content_from_html(html).unwrap(), "  Multiple   spaces  ");
+    assert_eq!(
+        text_content_from_html(html).unwrap(),
+        "  Multiple   spaces  "
+    );
 }
 
 #[test]

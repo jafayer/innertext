@@ -61,9 +61,37 @@ pub(crate) fn default_display(tag: &str) -> Display {
 
 fn is_default_block(tag: &str) -> bool {
     const BLOCK_TAGS: &[&str] = &[
-        "address", "article", "aside", "blockquote", "details", "dialog", "dd", "div", "dl",
-        "dt", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4",
-        "h5", "h6", "header", "hr", "li", "main", "nav", "ol", "p", "pre", "section", "ul",
+        "address",
+        "article",
+        "aside",
+        "blockquote",
+        "details",
+        "dialog",
+        "dd",
+        "div",
+        "dl",
+        "dt",
+        "fieldset",
+        "figcaption",
+        "figure",
+        "footer",
+        "form",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "header",
+        "hr",
+        "li",
+        "main",
+        "nav",
+        "ol",
+        "p",
+        "pre",
+        "section",
+        "ul",
     ];
     BLOCK_TAGS.contains(&tag)
 }
@@ -112,7 +140,7 @@ fn apply_pre_line(text: &str) -> String {
     // pre-line: collapse spaces within lines, preserve line breaks, trim lines
     let lines: Vec<&str> = text.split('\n').collect();
     let mut result_lines = Vec::new();
-    
+
     for line in lines {
         let collapsed = {
             let mut out = String::new();
@@ -136,7 +164,7 @@ fn apply_pre_line(text: &str) -> String {
         };
         result_lines.push(collapsed.trim().to_string());
     }
-    
+
     result_lines.join("\n")
 }
 

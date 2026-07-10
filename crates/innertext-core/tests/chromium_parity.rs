@@ -1,9 +1,9 @@
-use std::fs;
+use std::collections::BTreeMap;
 use std::fmt::Write as _;
+use std::fs;
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
-use std::collections::BTreeMap;
 
 use innertext_core::Document;
 use serde::Deserialize;
@@ -158,10 +158,7 @@ fn run_mode(mode: Mode) {
             let _ = writeln!(
                 report,
                 "  - {} [{}] rust={:?} chromium={:?}",
-                gap.id,
-                gap.category,
-                gap.rust_value,
-                gap.browser_value
+                gap.id, gap.category, gap.rust_value, gap.browser_value
             );
         }
 

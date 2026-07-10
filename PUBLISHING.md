@@ -6,17 +6,24 @@ This project uses GitHub Actions to automate publishing of language bindings to 
 
 ### Prerequisites
 
-1. **PyPI Setup** (one-time):
+1. **PyPI Setup** (one-time, using Trusted Publishers):
    - Create a PyPI account at https://pypi.org if you don't have one
-   - Go to Account Settings → API tokens
-   - Create a new token with scope "Entire account (all projects)"
-   - Add the token to your GitHub repository secrets as `PYPI_TOKEN`
+   - Go to Account Settings → Publishing
+   - Add a new **pending publisher** with:
+     - **PyPI Project Name**: `innertext`
+     - **Owner**: Your GitHub username
+     - **Repository name**: `innertext`
+     - **Workflow name**: `publish-pypi.yml`
+     - **Environment name**: `pypi`
+   - No API tokens needed! Uses OpenID Connect (OIDC) for secure, credential-free publishing
+   - Once you publish the first release, this becomes a trusted publisher
 
 2. **npm Setup** (one-time):
    - Create an npm account at https://www.npmjs.com if you don't have one
    - Go to Access Tokens → Generate new token
    - Create a token with "Automation" or "Write" permissions
    - Add the token to your GitHub repository secrets as `NPM_TOKEN`
+   - (npm doesn't support OIDC yet, so tokens are currently required)
 
 ### Making a Release
 
@@ -59,8 +66,11 @@ Builds Python wheels for 5 platforms and publishes to PyPI:
   - Windows x86_64
 - **Tool**: `maturin` (PyO3 build backend)
 - **Output**: Wheels uploaded to PyPI
-- **Auth**: Uses `PYPI_TOKEN` environment variable
-- **Authentication Method**: PyPA trusted publishing (OIDC) - no need to store tokens
+- **Authentication Method**: PyPI Trusted Publishers (OpenID Connect / OIDC)
+  - No stored tokens needed
+  - GitHub Actions generates a time-limited OIDC token
+  - PyPI verifies the token and allows publish if trusted publisher is registered
+  - More secure and maintainable than API tokens
 
 ### `publish-npm.yml`
 
@@ -73,13 +83,40 @@ Builds native Node.js modules for 5 platforms and publishes to npm:
 - **Auth**: Uses `NPM_TOKEN` environment variable
 - **Registry**: npm public registry
 
-## Setting Up Secrets in GitHub
+## Setting Up GitHub Environment for PyPI Publishing
+
+Create a GitHub Actions environment to enable OIDC trusted publishers:
+
+1. Go to your repository on GitHub
+2. Settings → Environments → New environment
+3. Name: `pypi`
+4. Leave "Deployment branches" as default (allow all)
+5. Click "Create environment"
+6. No secrets needed! (OIDC handles auth automatically)
+
+## Registering Trusted Publisher on PyPI
+
+This connects PyPI to your GitHub Actions workflow via OIDC:
+
+1. Go to https://pypi.org/manage/account/publishing/
+2. Click "Add a pending publisher"
+3. Fill in:
+   - **PyPI Project Name**: `innertext`
+   - **Owner**: Your GitHub username
+   - **Repository name**: `innertext` 
+   - **Workflow name**: `publish-pypi.yml`
+   - **Environment name**: `pypi`
+4. Click "Add publisher"
+5. First time you run `publish-pypi.yml`, the pending publisher becomes active
+
+## Setting Up npm Token Secret
+
+npm doesn't support OIDC yet, so you need to store a token:
 
 1. Go to your repository on GitHub
 2. Settings → Secrets and variables → Actions
-3. Create new repository secrets:
-   - **PYPI_TOKEN**: Your PyPI API token
-   - **NPM_TOKEN**: Your npm authentication token
+3. Create new repository secret:
+   - **NPM_TOKEN**: Your npm authentication token (from https://www.npmjs.com/settings/tokens)
 
 ## Cross-Platform Build Strategy
 
@@ -123,13 +160,25 @@ Python's `pyproject.toml` and Node's `package.json` use hardcoded versions that 
 
 ## Troubleshooting
 
-### PyPI publish fails
-- Check that `PYPI_TOKEN` is set in repository secrets
-- Verify the wheel files were created and uploaded as artifacts
-- Check PyPI for any validation errors in the build logs
+### PyPI publish fails with "No trusted publishers found"
+- Trusted publisher not registered on PyPI
+- Go to https://pypi.org/manage/account/publishing/
+- Check that a pending or active publisher is configured for `innertext`
+- Verify the environment name in workflow matches `pypi` in PyPI settings
+
+### PyPI publish fails with permission/auth error
+- GitHub environment `pypi` not created
+- Go to Settings → Environments → New environment → `pypi`
+- Ensure the workflow job is using `environment: pypi`
+
+### PyPI publish fails with version already exists
+- You're trying to publish a version that already exists
+- Increment version in Cargo.toml
+- Yank the old release on PyPI if needed (see Emergency Procedures)
 
 ### npm publish fails
-- Check that `NPM_TOKEN` is set and has "publish" permissions
+- Check that `NPM_TOKEN` secret is set in GitHub
+- Verify the token has "Automation" or "Write" permissions
 - Verify the .node files were created for all platforms
 - Ensure `package.json` version matches the git tag
 
@@ -140,8 +189,29 @@ Python's `pyproject.toml` and Node's `package.json` use hardcoded versions that 
   - Python version compatibility (pyproject.toml classifiers)
   - Node version compatibility (package.json engines field)
 
+## Understanding OIDC Trusted Publishers
+
+**OpenID Connect (OIDC)** is a secure authentication method that PyPI recommends for automating releases. Here's why it's better than API tokens:
+
+### Benefits
+- **No stored secrets**: GitHub Actions generates temporary tokens that expire after the build
+- **Revocation**: Automatically invalidated after each publish (no manual token rotation needed)
+- **Audit trail**: PyPI logs which workflow performed the publish
+- **Least privilege**: Each publish uses minimum necessary permissions
+- **Repo isolation**: Publishing permissions aren't available to all jobs/branches
+
+### How it works
+1. GitHub Actions generates an OIDC token signed by GitHub
+2. Workflow sends token to PyPI
+3. PyPI verifies the token signature and checks trusted publishers
+4. If verified, PyPI allows the publish
+5. Token is immediately invalidated
+
+No API tokens ever stored in GitHub secrets!
+
 ## Future Enhancements
 
+- [ ] npm OIDC support (when available)
 - [ ] Automate version syncing across all config files
 - [ ] Add GitHub Release notes generation from CHANGELOG
 - [ ] Publish Java bindings to Maven Central

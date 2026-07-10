@@ -15,8 +15,7 @@ pub struct Document {
 
 impl Document {
     pub fn parse(html: &str) -> Result<Self, ExtractionError> {
-        let dom: RcDom =
-            parse_document(RcDom::default(), Default::default()).one(html);
+        let dom: RcDom = parse_document(RcDom::default(), Default::default()).one(html);
         Ok(Self { dom })
     }
 

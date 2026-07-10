@@ -66,20 +66,24 @@ git push origin v0.2.0
 
 ## Setting Up Secrets (One-time)
 
-### PyPI Token
+### PyPI Trusted Publisher (OIDC)
 1. Create account at https://pypi.org
-2. Account Settings → API tokens → Create token
-3. Copy the token
-4. Go to GitHub repo → Settings → Secrets and variables → Actions
-5. Create new secret `PYPI_TOKEN` with the token value
+2. Go to Account Settings → Publishing
+3. Add pending publisher with:
+   - Project Name: `innertext`
+   - Owner: Your GitHub username
+   - Repository: `innertext`
+   - Workflow: `publish-pypi.yml`
+   - Environment: `pypi`
+4. Create GitHub environment: Settings → Environments → New → `pypi`
+5. No secrets needed! (OIDC handles authentication)
 
 ### npm Token
 1. Create account at https://www.npmjs.com
-2. Account Settings → Access Tokens → Generate new token
+2. Settings → Access Tokens → Generate new token
 3. Choose "Automation" or "Write" scope
-4. Copy the token
-5. Go to GitHub repo → Settings → Secrets and variables → Actions
-6. Create new secret `NPM_TOKEN` with the token value
+4. Go to GitHub repo → Settings → Secrets and variables → Actions
+5. Create secret `NPM_TOKEN` with the token value
 
 ## Troubleshooting
 

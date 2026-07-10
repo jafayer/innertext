@@ -1,10 +1,10 @@
-use jni::JNIEnv;
+use innertext_core::Document;
 use jni::objects::{JClass, JString};
 use jni::sys::jstring;
-use innertext_core::Document;
+use jni::JNIEnv;
 
 /// Extract innerText from HTML
-/// 
+///
 /// @param html HTML string
 /// @return rendered text content
 #[no_mangle]
@@ -30,16 +30,15 @@ pub extern "system" fn Java_com_innertext_InnerText_innerText<'a>(
                 .map(|s| s.into_raw())
                 .unwrap_or(std::ptr::null_mut())
         }
-        Err(_) => {
-            env.new_string("Failed to parse HTML")
-                .map(|s| s.into_raw())
-                .unwrap_or(std::ptr::null_mut())
-        }
+        Err(_) => env
+            .new_string("Failed to parse HTML")
+            .map(|s| s.into_raw())
+            .unwrap_or(std::ptr::null_mut()),
     }
 }
 
 /// Extract outerText from HTML
-/// 
+///
 /// @param html HTML string
 /// @return outer text content
 #[no_mangle]
@@ -65,16 +64,15 @@ pub extern "system" fn Java_com_innertext_InnerText_outerText<'a>(
                 .map(|s| s.into_raw())
                 .unwrap_or(std::ptr::null_mut())
         }
-        Err(_) => {
-            env.new_string("Failed to parse HTML")
-                .map(|s| s.into_raw())
-                .unwrap_or(std::ptr::null_mut())
-        }
+        Err(_) => env
+            .new_string("Failed to parse HTML")
+            .map(|s| s.into_raw())
+            .unwrap_or(std::ptr::null_mut()),
     }
 }
 
 /// Extract textContent from HTML
-/// 
+///
 /// @param html HTML string
 /// @return structural text content
 #[no_mangle]
@@ -100,10 +98,9 @@ pub extern "system" fn Java_com_innertext_InnerText_textContent<'a>(
                 .map(|s| s.into_raw())
                 .unwrap_or(std::ptr::null_mut())
         }
-        Err(_) => {
-            env.new_string("Failed to parse HTML")
-                .map(|s| s.into_raw())
-                .unwrap_or(std::ptr::null_mut())
-        }
+        Err(_) => env
+            .new_string("Failed to parse HTML")
+            .map(|s| s.into_raw())
+            .unwrap_or(std::ptr::null_mut()),
     }
 }

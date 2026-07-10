@@ -35,7 +35,8 @@ fn rendered_text_collection(node: &Handle, inherited_style: &Style) -> Vec<Rende
             }
 
             let raw = contents.borrow();
-            let transformed = css::apply_text_transform(raw.as_ref(), &inherited_style.text_transform);
+            let transformed =
+                css::apply_text_transform(raw.as_ref(), &inherited_style.text_transform);
             let normalized = css::apply_white_space(&transformed, &inherited_style.white_space);
 
             if normalized.is_empty() {
@@ -57,7 +58,7 @@ fn rendered_text_collection(node: &Handle, inherited_style: &Style) -> Vec<Rende
 
             // Replaced elements: textarea, input, and img are skipped for innerText
             // These form controls and replaced content don't contribute rendered text
-            if tag.eq_ignore_ascii_case("textarea") 
+            if tag.eq_ignore_ascii_case("textarea")
                 || tag.eq_ignore_ascii_case("input")
                 || tag.eq_ignore_ascii_case("img")
             {
@@ -213,7 +214,8 @@ fn has_next_sibling_of_display(node: &Handle, target: Display) -> bool {
 
             if let NodeData::Element { name, attrs, .. } = &sibling.data {
                 let inline_style = css::inline_style_attr(&attrs.borrow());
-                let style = css::derive_style(name.local.as_ref(), inline_style.as_deref(), &Style::root());
+                let style =
+                    css::derive_style(name.local.as_ref(), inline_style.as_deref(), &Style::root());
                 if style.display == target {
                     return true;
                 }

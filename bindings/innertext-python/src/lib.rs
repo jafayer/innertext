@@ -1,6 +1,6 @@
-use pyo3::prelude::*;
-use pyo3::exceptions::PyValueError;
 use innertext_core::Document;
+use pyo3::exceptions::PyValueError;
+use pyo3::prelude::*;
 
 /// Extract innerText from HTML (rendered text collection per WHATWG spec)
 #[pyfunction]
