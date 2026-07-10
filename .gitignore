@@ -2,3 +2,4 @@
 node_modules
 tools/browser-oracle/node_modules/
 tools/browser-oracle/package-lock.json
+bindings/innertext-python/dist/
