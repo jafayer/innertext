@@ -1,5 +1,5 @@
 [build-system]
-requires = ["maturin>=0.15,<0.16"]
+requires = ["maturin>=0.15"]
 build-backend = "maturin"
 
 [project]
@@ -36,4 +36,3 @@ Homepage = "https://github.com/joshfayer/innertext"
 
 [tool.maturin]
 features = ["pyo3/extension-module"]
-python-source = "python"

@@ -107,5 +107,19 @@ jobs:
       - name: Check formatting
         run: cargo fmt -- --check
 
-      - name: Run clippy
-        run: cargo clippy --all --all-targets -- -D warnings
+      # Lint non-Python crates
+      - name: Run clippy (core + node + java)
+        run: >
+          cargo clippy
+          -p innertext-core
+          -p innertext-node
+          -p innertext-java
+          --all-targets -- -D warnings
+
+      # Python binding requires pyo3/extension-module to surface PyO3-specific lints
+      - name: Run clippy (python binding)
+        run: >
+          cargo clippy
+          -p innertext-python
+          --features pyo3/extension-module
+          --all-targets -- -D warnings
