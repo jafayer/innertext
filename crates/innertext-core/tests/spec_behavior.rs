@@ -64,7 +64,10 @@ fn formatting_whitespace_between_p_tags_does_not_change_inner_text() {
 
     assert_eq!(spaced_actual, expected);
     assert_eq!(heavily_spaced_actual, expected);
-    assert_eq!(expected, "Some text\n\nSome more text which is inside a span");
+    assert_eq!(
+        expected,
+        "Some text\n\nSome more text which is inside a span"
+    );
 }
 
 // ── outerText getter ───────────────────────────────────────────────────────

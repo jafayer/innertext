@@ -139,7 +139,8 @@ fn drop_inter_block_separator_spaces(tokens: Vec<RenderToken>) -> Vec<RenderToke
 
     for i in 0..tokens.len() {
         if let RenderToken::Text(text) = &tokens[i] {
-            let prev_is_break = i > 0 && matches!(tokens.get(i - 1), Some(RenderToken::RequiredBreak(_)));
+            let prev_is_break =
+                i > 0 && matches!(tokens.get(i - 1), Some(RenderToken::RequiredBreak(_)));
             let next_is_break = matches!(tokens.get(i + 1), Some(RenderToken::RequiredBreak(_)));
             if text.chars().all(|ch| ch == ' ') && prev_is_break && next_is_break {
                 continue;
