@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "innertext"
-version = "0.2.3"
+version = "0.2.4"
 description = "Pure Rust WHATWG-compliant innerText, outerText, and textContent extraction"
 readme = "README.md"
 license = { text = "MIT" }
