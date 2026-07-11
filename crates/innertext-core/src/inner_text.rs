@@ -23,6 +23,7 @@ pub(crate) fn extract(dom: &RcDom) -> String {
 
     let normalized = normalize_tokens(tokens);
     let normalized = drop_inter_block_separator_spaces(normalized);
+    let normalized = drop_boundaries_between_required_breaks(normalized);
     let folded = fold_required_break_runs(normalized);
     serialize_tokens(folded)
 }
@@ -139,10 +140,34 @@ fn drop_inter_block_separator_spaces(tokens: Vec<RenderToken>) -> Vec<RenderToke
 
     for i in 0..tokens.len() {
         if let RenderToken::Text(text) = &tokens[i] {
+            let prev_is_marker = i > 0
+                && matches!(
+                    tokens.get(i - 1),
+                    Some(RenderToken::RequiredBreak(_) | RenderToken::CollapseBoundary)
+                );
+            let next_is_marker = matches!(
+                tokens.get(i + 1),
+                Some(RenderToken::RequiredBreak(_) | RenderToken::CollapseBoundary)
+            );
+            if text.chars().all(|ch| ch == ' ') && prev_is_marker && next_is_marker {
+                continue;
+            }
+        }
+        out.push(tokens[i].clone());
+    }
+
+    out
+}
+
+fn drop_boundaries_between_required_breaks(tokens: Vec<RenderToken>) -> Vec<RenderToken> {
+    let mut out = Vec::with_capacity(tokens.len());
+
+    for i in 0..tokens.len() {
+        if matches!(tokens[i], RenderToken::CollapseBoundary) {
             let prev_is_break =
                 i > 0 && matches!(tokens.get(i - 1), Some(RenderToken::RequiredBreak(_)));
             let next_is_break = matches!(tokens.get(i + 1), Some(RenderToken::RequiredBreak(_)));
-            if text.chars().all(|ch| ch == ' ') && prev_is_break && next_is_break {
+            if prev_is_break && next_is_break {
                 continue;
             }
         }

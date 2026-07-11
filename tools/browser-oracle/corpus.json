@@ -72,6 +72,24 @@
     "category": "block"
   },
   {
+    "id": "paragraph_boundaries_with_source_whitespace",
+    "html": "<div id='root'><p>First</p>\n\n\n   <p>Second</p></div>",
+    "selector": "#root",
+    "category": "block"
+  },
+  {
+    "id": "block_siblings_with_source_whitespace",
+    "html": "<div id='root'><div>A</div>\n\n\n   <div>B</div></div>",
+    "selector": "#root",
+    "category": "block"
+  },
+  {
+    "id": "hidden_block_separator_whitespace",
+    "html": "<div id='root'><p>One</p>\n\n\n<p style='display:none'>Hidden</p>\n\n\n<p>Two</p></div>",
+    "selector": "#root",
+    "category": "display"
+  },
+  {
     "id": "metadata_script",
     "html": "<div id='root'>A<script>alert(1)</script>B</div>",
     "selector": "#root",

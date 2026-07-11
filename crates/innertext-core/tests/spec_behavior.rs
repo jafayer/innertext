@@ -70,6 +70,29 @@ fn formatting_whitespace_between_p_tags_does_not_change_inner_text() {
     );
 }
 
+#[test]
+fn formatting_whitespace_between_div_tags_does_not_change_inner_text() {
+    let compact = "<div>Block A</div><div>Block B</div>";
+    let spaced = "<div>Block A</div>\n\n\n    <div>Block B</div>";
+
+    let expected = inner_text_from_html(compact).expect("must extract compact text");
+    let actual = inner_text_from_html(spaced).expect("must extract spaced text");
+
+    assert_eq!(actual, expected);
+    assert_eq!(expected, "Block A\nBlock B");
+}
+
+#[test]
+fn hidden_block_with_separator_whitespace_does_not_add_extra_gaps() {
+    let compact = "<p>One</p><p style='display:none'>Hidden</p><p>Two</p>";
+    let spaced = "<p>One</p>\n\n\n<p style='display:none'>Hidden</p>\n\n\n<p>Two</p>";
+
+    let expected = inner_text_from_html(compact).expect("must extract compact text");
+    let actual = inner_text_from_html(spaced).expect("must extract spaced text");
+
+    assert_eq!(actual, expected);
+}
+
 // ── outerText getter ───────────────────────────────────────────────────────
 
 #[test]
