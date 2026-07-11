@@ -27,6 +27,26 @@ print(innertext.inner_text(html))  # "Hello World"
 print(innertext.text_content(html))  # "Hello hidden console.log("not shown")"
 ```
 
+## Packaging Notes
+
+The published Python package uses a two-layer layout:
+- `innertext` is a regular Python package with a runtime `__init__.py`
+- the compiled Rust extension is loaded as `innertext._innertext`
+
+This avoids namespace-package import issues and ensures `import innertext`
+always exposes `inner_text`, `outer_text`, and `text_content`.
+
+## Type Hints
+
+This package ships with PEP 561-compatible typing metadata:
+- `innertext/__init__.pyi` defines the public API types
+- `innertext/py.typed` marks the package as typed
+
+Type checkers such as mypy and pyright can therefore infer:
+- `inner_text(html: str) -> str`
+- `outer_text(html: str) -> str`
+- `text_content(html: str) -> str`
+
 ## API
 
 ### Functions

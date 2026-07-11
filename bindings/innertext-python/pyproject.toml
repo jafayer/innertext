@@ -39,3 +39,4 @@ Homepage = "https://github.com/joshfayer/innertext"
 [tool.maturin]
 features = ["pyo3/extension-module", "pyo3/abi3-py37"]
 python-source = "python"
+module-name = "innertext._innertext"

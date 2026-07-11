@@ -3,3 +3,5 @@ node_modules
 tools/browser-oracle/node_modules/
 tools/browser-oracle/package-lock.json
 bindings/innertext-python/dist/
+bindings/innertext-python/python/innertext/*.so
+bindings/innertext-python/uv.lock

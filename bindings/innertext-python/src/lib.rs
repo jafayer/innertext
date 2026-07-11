@@ -29,7 +29,7 @@ fn text_content(html: &str) -> Result<String, PyErr> {
 }
 
 #[pymodule]
-fn innertext(m: &Bound<'_, PyModule>) -> PyResult<()> {
+fn _innertext(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(inner_text, m)?)?;
     m.add_function(wrap_pyfunction!(outer_text, m)?)?;
     m.add_function(wrap_pyfunction!(text_content, m)?)?;
