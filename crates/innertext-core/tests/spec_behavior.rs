@@ -51,6 +51,22 @@ fn sibling_blocks_have_two_newlines_between_them() {
     assert_eq!(got, "Block A\nBlock B");
 }
 
+#[test]
+fn formatting_whitespace_between_p_tags_does_not_change_inner_text() {
+    let compact = "<p>Some text</p><p>Some more text which <span>is inside a span</span></p><p style='display: none'>This text is hidden</p>";
+    let spaced = "<p>Some text</p>\n\n<p>Some more text which <span>is inside a span</span></p><p style='display: none'>This text is hidden</p>";
+    let heavily_spaced = "<p>Some text</p>\n\n\n\n   <p>Some more text which <span>is inside a span</span></p><p style='display: none'>This text is hidden</p>";
+
+    let expected = inner_text_from_html(compact).expect("must extract compact text");
+    let spaced_actual = inner_text_from_html(spaced).expect("must extract spaced text");
+    let heavily_spaced_actual =
+        inner_text_from_html(heavily_spaced).expect("must extract heavily spaced text");
+
+    assert_eq!(spaced_actual, expected);
+    assert_eq!(heavily_spaced_actual, expected);
+    assert_eq!(expected, "Some text\n\nSome more text which is inside a span");
+}
+
 // ── outerText getter ───────────────────────────────────────────────────────
 
 #[test]

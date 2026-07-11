@@ -22,6 +22,7 @@ pub(crate) fn extract(dom: &RcDom) -> String {
     }
 
     let normalized = normalize_tokens(tokens);
+    let normalized = drop_inter_block_separator_spaces(normalized);
     let folded = fold_required_break_runs(normalized);
     serialize_tokens(folded)
 }
@@ -131,6 +132,23 @@ fn normalize_tokens(mut tokens: Vec<RenderToken>) -> Vec<RenderToken> {
     }
 
     tokens
+}
+
+fn drop_inter_block_separator_spaces(tokens: Vec<RenderToken>) -> Vec<RenderToken> {
+    let mut out = Vec::with_capacity(tokens.len());
+
+    for i in 0..tokens.len() {
+        if let RenderToken::Text(text) = &tokens[i] {
+            let prev_is_break = i > 0 && matches!(tokens.get(i - 1), Some(RenderToken::RequiredBreak(_)));
+            let next_is_break = matches!(tokens.get(i + 1), Some(RenderToken::RequiredBreak(_)));
+            if text.chars().all(|ch| ch == ' ') && prev_is_break && next_is_break {
+                continue;
+            }
+        }
+        out.push(tokens[i].clone());
+    }
+
+    out
 }
 
 fn fold_required_break_runs(tokens: Vec<RenderToken>) -> Vec<RenderToken> {

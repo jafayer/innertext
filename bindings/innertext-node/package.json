@@ -39,12 +39,6 @@
   "devDependencies": {
     "@napi-rs/cli": "^2.16.0"
   },
-  "optionalDependencies": {
-    "@innertext/linux-x64": "0.1.0",
-    "@innertext/macos-x64": "0.1.0",
-    "@innertext/macos-arm64": "0.1.0",
-    "@innertext/win32-x64": "0.1.0"
-  },
   "files": [
     "index.d.ts",
     "index.js",

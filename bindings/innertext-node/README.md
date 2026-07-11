@@ -39,7 +39,7 @@ console.log(doc.textContent());    // "Hello hidden console.log("not shown")"
 ### TypeScript
 
 ```typescript
-import { innerText, HtmlDocument, TextContent } from 'innertext';
+import { innerText, HtmlDocument, textContent } from 'innertext';
 
 const html: string = '<div>Hello World</div>';
 const text: string = innerText(html);
