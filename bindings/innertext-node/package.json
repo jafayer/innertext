@@ -1,6 +1,6 @@
 {
   "name": "innertext",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Pure Rust WHATWG-compliant innerText, outerText, and textContent extraction",
   "main": "index.js",
   "types": "index.d.ts",
