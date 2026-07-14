@@ -20,7 +20,7 @@ jobs:
             triple: x86_64-unknown-linux-musl
             container: rust:latest
           # macOS x86_64
-          - os: macos-latest
+          - os: macos-13
             target: x86_64-apple-darwin
             triple: x86_64-apple-darwin
           # macOS ARM64 (Apple Silicon)
