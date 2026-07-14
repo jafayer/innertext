@@ -9,7 +9,7 @@ description = "Pure Rust WHATWG-compliant innerText, outerText, and textContent 
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
-    { name = "Josh Fayer", email = "josh@example.com" }
+    { name = "Josh Fayer", email = "dev@fayer.me" }
 ]
 requires-python = ">=3.7"
 classifiers = [

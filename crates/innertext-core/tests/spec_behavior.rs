@@ -93,6 +93,34 @@ fn hidden_block_with_separator_whitespace_does_not_add_extra_gaps() {
     assert_eq!(actual, expected);
 }
 
+#[test]
+fn table_cell_injects_tab_between_non_last_cells() {
+    let html = "<table><tr><td>A</td><td>B</td></tr></table>";
+    let got = inner_text_from_html(html).expect("must extract text");
+    assert_eq!(got, "A\tB");
+}
+
+#[test]
+fn table_row_injects_newline_between_non_last_rows() {
+    let html = "<table><tr><td>Row 1</td></tr><tr><td>Row 2</td></tr></table>";
+    let got = inner_text_from_html(html).expect("must extract text");
+    assert_eq!(got, "Row 1\nRow 2");
+}
+
+#[test]
+fn text_transform_uppercase_applies_to_text_nodes() {
+    let html = "<p style='text-transform: uppercase;'>hello world</p>";
+    let got = inner_text_from_html(html).expect("must extract text");
+    assert_eq!(got, "HELLO WORLD");
+}
+
+#[test]
+fn text_transform_lowercase_applies_to_text_nodes() {
+    let html = "<p style='text-transform: lowercase;'>HELLO WORLD</p>";
+    let got = inner_text_from_html(html).expect("must extract text");
+    assert_eq!(got, "hello world");
+}
+
 // ── outerText getter ───────────────────────────────────────────────────────
 
 #[test]

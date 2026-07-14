@@ -1,4 +1,14 @@
-Feature: WHATWG 3.2.7 innerText Serialization Engine
+# WHATWG HTML Living Standard — 3.2.7 innerText / outerText / textContent
+# https://html.spec.whatwg.org/multipage/dom.html#the-innertext-idl-attribute
+#
+# Out-of-scope for this implementation (requires a full CSS layout engine):
+#   - select / optgroup / option special non-replaced box handling
+#   - display:contents (children produce items even when parent has no box)
+#   - Soft-hyphen preservation (U+00AD; requires CSS text shaping)
+
+Feature: WHATWG 3.2.7 innerText / outerText / textContent
+
+  # ── innerText getter ─────────────────────────────────────────────────────
 
   Scenario: Elements matching display none are dropped entirely
     Given a DOM element "<div>Hello <span style='display: none;'>Secret</span> World</div>"
@@ -8,7 +18,7 @@ Feature: WHATWG 3.2.7 innerText Serialization Engine
   Scenario: Hidden visibility acts as an empty inline box but isolates boundaries
     Given a DOM element "<div>Left <p style='visibility: hidden;'>Hidden Block</p> Right</div>"
     When the engine computes the innerText serialization
-    Then the output text must contain correct line spacing boundaries matching "Left \n\n Right"
+    Then the output text must contain correct line spacing boundaries matching "Left  Right"
 
   Scenario: Pure metadata tags are ignored regardless of explicit display overrides
     Given a DOM element "<div>Visible <script style='display: block;'>alert(1)</script> End</div>"
@@ -30,7 +40,71 @@ Feature: WHATWG 3.2.7 innerText Serialization Engine
     When the engine computes the innerText serialization
     Then the output text must be "Line One\nLine Two"
 
-  Scenario: Sibling block containers enforce exactly two newlines between text blocks
+  Scenario: Sibling block containers enforce one newline between text blocks
     Given a DOM element "<div>Block A</div><div>Block B</div>"
     When the engine computes the innerText serialization
-    Then the output text must be "Block A\n\nBlock B"
+    Then the output text must be "Block A\nBlock B"
+
+  Scenario: Paragraph elements enforce two newlines between them
+    Given a DOM element "<p>Para A</p><p>Para B</p>"
+    When the engine computes the innerText serialization
+    Then the output text must be "Para A\n\nPara B"
+
+  Scenario: Non-last table-cell appends a tab character
+    Given a DOM element "<table><tr><td>A</td><td>B</td></tr></table>"
+    When the engine computes the innerText serialization
+    Then the output text must be "A\tB"
+
+  Scenario: Non-last table-row appends a newline character
+    Given a DOM element "<table><tr><td>Row 1</td></tr><tr><td>Row 2</td></tr></table>"
+    When the engine computes the innerText serialization
+    Then the output text must be "Row 1\nRow 2"
+
+  Scenario: text-transform uppercase is applied to text nodes
+    Given a DOM element "<p style='text-transform: uppercase;'>hello world</p>"
+    When the engine computes the innerText serialization
+    Then the output text must be "HELLO WORLD"
+
+  Scenario: text-transform lowercase is applied to text nodes
+    Given a DOM element "<p style='text-transform: lowercase;'>HELLO WORLD</p>"
+    When the engine computes the innerText serialization
+    Then the output text must be "hello world"
+
+  # ── outerText getter (getter steps are identical to innerText per spec) ───
+
+  Scenario: outerText getter returns the same result as innerText for inline content
+    Given a DOM element "<div>Hello World</div>"
+    When the engine computes the outerText serialization
+    Then the output text must be "Hello World"
+
+  Scenario: outerText getter returns the same result as innerText with line breaks
+    Given a DOM element "<div>Line One<br>Line Two</div>"
+    When the engine computes the outerText serialization
+    Then the output text must be "Line One\nLine Two"
+
+  Scenario: outerText getter returns the same result as innerText with block elements
+    Given a DOM element "<p>Para A</p><p>Para B</p>"
+    When the engine computes the outerText serialization
+    Then the output text must be "Para A\n\nPara B"
+
+  # ── textContent (DOM descendant text content — no CSS involvement) ────────
+
+  Scenario: textContent includes display none content
+    Given a DOM element "<div>Hello <span style='display: none;'>Hidden</span> World</div>"
+    When the engine computes the textContent
+    Then the output text must be "Hello Hidden World"
+
+  Scenario: textContent includes script element text
+    Given a DOM element "<div>A<script>alert(1)</script>B</div>"
+    When the engine computes the textContent
+    Then the output text must be "Aalert(1)B"
+
+  Scenario: textContent preserves raw whitespace without collapsing
+    Given a DOM element "<div>  Multiple   spaces  </div>"
+    When the engine computes the textContent
+    Then the output text must be "  Multiple   spaces  "
+
+  Scenario: textContent includes visibility hidden content
+    Given a DOM element "<div>Visible<span style='visibility: hidden;'>Ghost</span>End</div>"
+    When the engine computes the textContent
+    Then the output text must be "VisibleGhostEnd"
