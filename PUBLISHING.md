@@ -124,7 +124,7 @@ npm doesn't support OIDC yet, so you need to store a token:
 
 Each platform builds on the appropriate GitHub Actions runner:
 - Ubuntu runners build Linux (glibc and musl via `manylinux` maturin arg)
-- macOS runners build macOS (x86_64 and ARM64 on `macos-14`)
+- macOS runners build x86_64 wheels/binaries on `macos-13` (Intel) and ARM64 wheels/binaries on `macos-14` (Apple Silicon)
 - Windows runners build Windows x86_64
 
 The `maturin build --release` command handles:
